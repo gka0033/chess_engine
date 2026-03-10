@@ -1,4 +1,5 @@
 import pieces
+import game
 def select(x, y):
     return board[y][x]
 
@@ -63,6 +64,7 @@ def move(x1, y1, x2, y2):
     piece = select(x1, y1)
     set_piece(x2, y2, piece)
     set_piece(x1, y1, '..')
+    game.next_turn()
     
 def get_moves(x, y):
     piece = select(x, y)
@@ -71,6 +73,10 @@ def get_moves(x, y):
     
     color = piece[0]
     kind = piece[1]
+
+    if color != game.now_turn():
+        print('올바른 색이 아닙니다')
+        return []
     if kind == 'P':
         return pieces.pawn_moves(x, y, color)
     if kind == 'N':

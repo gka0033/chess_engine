@@ -1,5 +1,5 @@
 import board
-
+import game
 ## 보드 생성
 
 boardnow = board.init_board()
@@ -14,7 +14,7 @@ while s != 's':
     for row in boardnow:
         print(" ".join(row))
     print('')
-    
+    print(f'현재 턴수 {game.turn}')
     print("기물을 입력하세요 ex 12, 58, 97")
     print("'s'를 눌러 취소합니다")
     s = input(">")
