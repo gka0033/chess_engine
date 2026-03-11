@@ -3,6 +3,9 @@ import game
 def select(x, y):
     return board[y][x]
 
+def get_color(x, y):
+    piece = select(x, y)
+    return piece[0]
 def is_inside_board(x, y):
     return 1 <= x <= 8 and 1 <= y <= 8
 
@@ -34,6 +37,14 @@ def init_board():
     board[8][6] = 'bB'
     board[8][4] = 'bK'
     board[8][5] = 'bQ'
+    board[1][2] = 'wN'
+    board[1][7] = 'wN'
+    board[1][1] = 'wR'
+    board[1][8] = 'wR'
+    board[1][3] = 'wB'
+    board[1][6] = 'wB'
+    board[1][4] = 'wK'
+    board[1][5] = 'wQ'
 
     return board
 
@@ -74,9 +85,6 @@ def get_moves(x, y):
     color = piece[0]
     kind = piece[1]
 
-    if color != game.now_turn():
-        print('올바른 색이 아닙니다')
-        return []
     if kind == 'P':
         return pieces.pawn_moves(x, y, color)
     if kind == 'N':
@@ -91,3 +99,33 @@ def get_moves(x, y):
         return pieces.king_moves(x, y, color)
 
     return []
+
+def get_all_moves(color):
+    moves = []
+
+    for y in range(1,9):
+        for x in range(1,9):
+            piece = select(x,y)
+
+            if piece == '..':
+                continue
+
+            if piece[0] != color:
+                continue
+
+            piece_moves = get_moves(x,y)
+
+            for m in piece_moves:
+                moves.append(m)
+
+    return moves
+
+def find_king(color):
+    target = color + 'K'
+
+    for y in range(1,9):
+        for x in range(1,9):
+            if select(x,y) == target:
+                return (x,y)
+
+    return None
