@@ -34,8 +34,11 @@ while s != 's':
     print(x1, y1)
     
     my_color = board.get_color(x1, y1)
+    if my_color is None:
+        print("기물이 없습니다.")
+        continue
     enemy_color = 'w' if my_color == 'b' else 'b'
-    print( my_color + enemy_color)
+    print(my_color, enemy_color)
     if not game.turn_check(my_color):
         continue
 

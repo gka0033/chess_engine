@@ -5,6 +5,8 @@ def select(x, y):
 
 def get_color(x, y):
     piece = select(x, y)
+    if piece == '..':
+        return None
     return piece[0]
 def is_inside_board(x, y):
     return 1 <= x <= 8 and 1 <= y <= 8
@@ -29,13 +31,16 @@ def init_board():
     for i in range(1,9):
         board[7][i] = 'bP'
         board[2][i] = 'wP'
+    '''
     board[8][2] = 'bN'
     board[8][7] = 'bN'
     board[8][1] = 'bR'
     board[8][8] = 'bR'
     board[8][3] = 'bB'
     board[8][6] = 'bB'
+    '''
     board[8][4] = 'bK'
+    '''
     board[8][5] = 'bQ'
     board[1][2] = 'wN'
     board[1][7] = 'wN'
@@ -43,8 +48,11 @@ def init_board():
     board[1][8] = 'wR'
     board[1][3] = 'wB'
     board[1][6] = 'wB'
+    '''
     board[1][4] = 'wK'
+    '''
     board[1][5] = 'wQ'
+    '''
 
     return board
 
@@ -86,7 +94,7 @@ def get_moves(x, y):
     kind = piece[1]
 
     if kind == 'P':
-        return pieces.pawn_moves(x, y, color)
+        return pieces.pawn_moves(x, y, color) + pieces.pawn_attacks(x, y, color)
     if kind == 'N':
         return pieces.knight_moves(x, y, color)
     if kind =='R':

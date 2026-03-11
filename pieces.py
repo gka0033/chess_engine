@@ -13,12 +13,23 @@ def pawn_moves(x, y, color):
 
     if board.is_empty(x, y+dir):
         moves.append((x,y+dir))
+    
+    if is_first_move and board.is_empty(x, y+dir) and board.is_empty(x, y+(dir * 2)):
+        moves.append((x, y+dir*2))
+    return moves
+
+def pawn_attacks(x, y, color):
+    moves = []
+    if color == 'b':
+        dir = -1
+    else:
+        dir = 1
+        
     if board.is_enemy(x+1, y+dir, color):
         moves.append((x+1, y+dir))
     if board.is_enemy(x-1, y+dir, color):
         moves.append((x-1, y+dir))
-    if is_first_move and board.is_empty(x, y+dir) and board.is_empty(x, y+(dir * 2)):
-        moves.append((x, y+dir*2))
+
     return moves
 
 def knight_moves(x, y, color):
