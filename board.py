@@ -27,20 +27,18 @@ def init_board():
             else:
                 row.append('..')
         board.append(row)
-
+    '''
     for i in range(1,9):
         board[7][i] = 'bP'
         board[2][i] = 'wP'
-    '''
+
     board[8][2] = 'bN'
     board[8][7] = 'bN'
     board[8][1] = 'bR'
     board[8][8] = 'bR'
     board[8][3] = 'bB'
     board[8][6] = 'bB'
-    '''
     board[8][4] = 'bK'
-    '''
     board[8][5] = 'bQ'
     board[1][2] = 'wN'
     board[1][7] = 'wN'
@@ -48,11 +46,19 @@ def init_board():
     board[1][8] = 'wR'
     board[1][3] = 'wB'
     board[1][6] = 'wB'
-    '''
     board[1][4] = 'wK'
-    '''
     board[1][5] = 'wQ'
     '''
+
+    board[8][5] = 'bK'
+    board[1][2] = 'wQ'
+    board[1][7] = 'wQ'
+    board[1][1] = 'wQ'
+    board[1][8] = 'wQ'
+    board[1][3] = 'wQ'
+    board[1][6] = 'wQ'
+    board[1][4] = 'wQ'
+    board[1][5] = 'wQ'
 
     return board
 
@@ -127,6 +133,33 @@ def get_all_moves(color):
                 moves.append(m)
 
     return moves
+
+def simulate_move(x1, y1, x2, y2):
+    piece = select(x1, y1)
+    captured = select(x2, y2)
+    set_piece(x2, y2, piece)
+    set_piece(x1, y1, '..')
+
+    return captured
+
+def undo_move(x1, y1, x2, y2, captured):
+    piece = select(x2, y2)
+    set_piece(x2, y2, captured)
+    set_piece(x1, y1, piece)
+
+def get_moves_can(x, y):
+    moves = get_moves(x, y)
+    moves_can = []
+    color = get_color(x, y)
+
+    for (mx, my) in moves:
+        captured = simulate_move(x, y, mx, my)
+        if game.is_check(color):
+            undo_move(x, y, mx, my, captured)
+        else:
+            moves_can.append((mx, my))
+            undo_move(x, y, mx, my, captured)
+    return moves_can
 
 def find_king(color):
     target = color + 'K'

@@ -29,3 +29,16 @@ def is_check(color):
     enemy_moves = board.get_all_moves(enemy)
 
     return king_pos in enemy_moves
+
+def is_checkmate(color):
+
+    for y in range(1, 9):
+        for x in range(1 , 9):
+            
+            if board.get_color(x, y) != color:
+                continue
+            
+            if board.get_moves_can(x, y):
+                return False
+
+    return True
