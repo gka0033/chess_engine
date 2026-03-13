@@ -1,7 +1,12 @@
+# TODO: 현 main.py가 너무 지저분함. 함수로 모듈화 및 구조 분석 필요
+# v0.41 주석 처리. 
+# 2026-03-13
+# 체크, 체크메이트, moves_can 구현및 정리 단계
+
 import board
 import game
 ## 보드 생성
-
+## 2차원 배열
 boardnow = board.init_board()
 
 
@@ -14,13 +19,13 @@ while s != 's':
     for row in boardnow:
         print(" ".join(row))
     print('')
+    ## 정보판 표시
     print(f'현재 턴수 {game.turn}')
     print("기물을 입력하세요 ex 12, 58, 97")
     print("'s'를 눌러 취소합니다")
 
     # 기물 선택 입력
     s = input(">")
-
     if s == 's':
         print('종료됩니다.')
         break
@@ -29,6 +34,7 @@ while s != 's':
         continue
 
     # s값 분해
+    # 이후 x1와 y1로 나눔
     ls = list(s)
     x1, y1 = (int(ls[0]),int(ls[1]))
     print(x1, y1)
@@ -68,6 +74,7 @@ while s != 's':
             # 체크 상태 확인
             if game.is_check(enemy_color):
                 print('체크!')
+                # 체크메이트 확인
                 if game.is_checkmate(enemy_color):
                     print('체크메이트, 승리!')
                     break
