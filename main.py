@@ -1,43 +1,39 @@
-# TODO: 현 main.py가 너무 지저분함. 함수로 모듈화 및 구조 분석 필요
-# v0.41 주석 처리. 
-# 2026-03-13
-# 체크, 체크메이트, moves_can 구현및 정리 단계
+# TODO: 코드 재정리 및 구조 정리 필요
+# v0.5 주석 처리. 
+# 2026-03-14
+# 스태일매이트 완성
+# NOTE: 현 board.이동 관련 함수에 대해 고민중
 
 import board
 import game
+
+s = input('prass any button to start')
+game.game_on()
+
 ## 보드 생성
-## 2차원 배열
 boardnow = board.init_board()
-
-
-
 s = ''
-while s != 's':
+while game.on:
     
     ## 보드 출력 코드
-    print('')
-    for row in boardnow:
-        print(" ".join(row))
-    print('')
+    board.board_print(boardnow)
     ## 정보판 표시
     print(f'현재 턴수 {game.turn}')
     print("기물을 입력하세요 ex 12, 58, 97")
     print("'s'를 눌러 취소합니다")
 
     # 기물 선택 입력
-    s = input(">")
-    if s == 's':
-        print('종료됩니다.')
+    s = board.player_input()
+    if s == 'end':
+        print('종료합니다')
         break
-    elif len(s) < 2 or not s[0].isdigit() or not s[1].isdigit():
-        print("올바른 입력이 아닙니다.")
-        continue
+    elif s == 'back':
+        print('올바른 입력이 아닙니다')
+        break
 
     # s값 분해
     # 이후 x1와 y1로 나눔
-    ls = list(s)
-    x1, y1 = (int(ls[0]),int(ls[1]))
-    print(x1, y1)
+    x1, y1 = game.input_decom(s)
     
     # 현재 올바른 진형을 골랐는지 체크
     my_color = board.get_color(x1, y1)
@@ -57,28 +53,20 @@ while s != 's':
     if piece_moves:
         print("목적지를 입력하세요 ex 12, 58, 97")
         print("'s'를 눌러 취소합니다")
-        d= input(">")
-        if d == 's':
-            print('취소합니다')
-            continue
-        elif len(d) < 2 or not d[0].isdigit() or not d[1].isdigit():
-            print("올바른 입력이 아닙니다.")
-            continue
-        ld = list(d)
-        x2, y2 = (int(ld[0]),int(ld[1]))
+        d = board.player_input()
+        if d == 'end':
+            print('종료합니다')
+            break
+        elif d == 'back':
+            print('올바른 입력이 아닙니다')
+            break
+        x2, y2 = game.input_decom(d)
         
         # 기물 이동
         if (x2, y2) in piece_moves:
             board.move(x1, y1, x2, y2)
 
-            # 체크 상태 확인
-            if game.is_check(enemy_color):
-                print('체크!')
-                # 체크메이트 확인
-                if game.is_checkmate(enemy_color):
-                    print('체크메이트, 승리!')
-                    break
-            game.next_turn()
+            game.after_move(my_color, enemy_color)
 
 
     else:

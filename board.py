@@ -6,6 +6,16 @@ import game
 def select(x, y):
     return board[y][x]
 
+# 플레이어의 입력을 받는 함수
+# 2자리 int일지, 반환함
+def player_input():
+    s = input('>')
+    if s == 's':
+        return 'end'
+    elif len(s) < 2 or not s[0].isdigit() or not s[1].isdigit():
+        return 'back'
+    return s
+
 # 선택한 좌표 기물의 색 반환
 def get_color(x, y):
     if is_empty(x, y):
@@ -59,12 +69,19 @@ def init_board():
     board[1][4] = 'wK'
     board[1][5] = 'wQ'
     '''
-    board[1][5] = 'wK'
-    board[8][1] = 'bQ'
-    board[8][2] = 'bQ'
+    board[4][4] = 'wK'
+    board[3][2] = 'bR'
+    board[5][4] = 'bR'
+    
 
 
     return board
+
+def board_print(boardnow):
+    print('')
+    for row in boardnow:
+        print(" ".join(row))
+    print('')
 
 # 좌표가 비어있는지 확인하는 함수
 def is_empty(x, y):
