@@ -1,7 +1,7 @@
-# TODO: 코드 재정리 및 구조 정리 필요
+# TODO: 캐슬링 제작 예정
 # v0.5 주석 처리. 
-# 2026-03-14
-# 스태일매이트 완성
+# 2026-03-23
+# 프로모션 완
 # NOTE: 현 board.이동 관련 함수에 대해 고민중
 
 import board
@@ -65,8 +65,9 @@ while game.on:
         # 기물 이동
         if (x2, y2) in piece_moves:
             board.move(x1, y1, x2, y2)
-
+            game.promotion(x2, y2)
             game.after_move(my_color, enemy_color)
+
 
 
     else:

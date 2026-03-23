@@ -59,7 +59,27 @@ def is_checkmate(color):
 
     return True
 
-# color 진형이 스태일메이트 상태인지 확인하는 함수
+# 프로모션 진행 함수
+# 프로모션 실행 상태를 return 함
+def promotion(x, y):
+    piece = board.select(x, y)
+    kind = piece[1]
+    color = piece[0]
+    if kind != 'P':
+        return False
+    
+    if color == 'b':
+        end = 1
+    else:
+        end = 8
+
+    if y == end:
+        board.set_piece(x, y, color+'Q')
+        return True
+    return False
+    
+
+# color 진형이 스테일메이트 상태인지 확인하는 함수
 # 함수: get_color(), get_moves_can()
 def is_stalemate(color):
     for y in range(1, 9):

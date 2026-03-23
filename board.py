@@ -69,9 +69,9 @@ def init_board():
     board[1][4] = 'wK'
     board[1][5] = 'wQ'
     '''
-    board[4][4] = 'wK'
-    board[3][2] = 'bR'
-    board[5][4] = 'bR'
+    board[7][5] = 'wP'
+    board[1][4] = 'wP'
+    board[8][8] = 'bP'
     
 
 
